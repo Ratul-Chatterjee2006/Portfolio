@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      margin:0;
+      font-family:Segoe UI;
+      background:#0f172a;
+      color:#e2e8f0;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+    }
+
+ 
+    body.light {
+      background:#fffdf2;
+      color:#2d2a26;
+    }
+
+    body.light .card {
+      background:#fffbea;
+      border:1px solid #f3e8c8;
+      color:#2d2a26;
+    }
+
+    body.light nav {
+      background:#fff7cc;
+    }
+
+    body.light footer {
+      background:#fff7cc;
+      color:#2d2a26;
+    }
+
+.section-title {
+  font-size: 26px;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+  animation: fadeInUp 0.5s ease;
+}
+
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background: #ef4444;
+  transition: width 0.3s ease;
+}
+
+
+.section-title:hover::after {
+  width: 100%;
+}
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+    nav {
+      display:flex;
+      justify-content:space-between;
+      padding:15px 30px;
+      background:#020617;
+      
+    }
+
+    nav a {
+      margin-left:15px;
+      color:#ef4444;
+      cursor:pointer;
+      transition:0.6s;
+    }
+     nav a:hover {
+      color:#0ea5e9;
+    }
+    nav a:active {
+      color:#7802ff;
+    }
+
+    main { flex:1; }
+    section { padding:50px; }
+
+   
+    .page {
+      animation: fadeSlide 0.8s ease-in-out;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity:0; transform: translateY(16px); }
+      to { opacity:1; transform: translateY(0); }
+    }
+
+    .card {
+      background:#020617;
+      padding:20px;
+      margin:15px 0;
+      border-radius:10px;
+      transition:0.3s;
+    }
+
+    .card:hover {
+      transform:translateY(-5px);
+      box-shadow:0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .btn {
+      background:#ef4444;
+      padding:10px 15px;
+      border:none;
+      color:white;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .btn:hover {
+      background:#3b82f6;
+      transform:translateY(-2px) scale(1.05);
+    }
+
+    .btn:active {
+      background:#16a34a;
+      transform:scale(0.92);
+    }
+
+    img {
+      width:150px;
+      border-radius:10px;
+      margin-top:10px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    img:hover { transform:scale(1.1); }
+
+  .profile-circle {
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  object-fit:cover;
+  object-position:center;
+}
+
+    .modal {
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(0,0,0,0.8);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .modal img, .modal iframe {
+    max-width:80%;
+    max-height:80%;
+    width:auto;
+     height:auto;
+    }
+
+   
+    footer {
+      text-align:center;
+      padding:20px;
+      background:#020617;
+    }
+
+    .contact-links a {
+      color:#38bdf8;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    a:link {
+      color: blue;      
+    }
+
+    a:visited {
+      color: rgb(255, 0, 242);    
+    }
+
+    a:hover {
+      color: red;       
+    }
+
+    a:active {
+      color: green;     
+    }
+
+    .icon-box {
+      background:#ffffff;
+      padding:3px;
+      border-radius:4px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .icon {
+      width:18px;
+      height:18px;
+    }
+     .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    justify-items: start;
+    }
+    @media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr; 
+  }
+}
+  </style>
+</head>
+
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+
+function Navbar({setPage}) {
+  return (
+    <nav>
+      <div><b>Portfolio</b></div>
+      <div>
+        <a onClick={()=>setPage('home')}>Home</a>
+        <a onClick={()=>setPage('education')}>Education</a>
+        <a onClick={()=>setPage('projects')}>Projects</a>
+        <a onClick={()=>setPage('achievements')}>Achievements</a>
+      </div>
+    </nav>
+  );
+}
+
+function Home({toggleTheme, openModal}) {
+  return (
+    <section>
+      <div style={{display:'flex',alignItems:'center'}}>
+        <img src="image.jpg" className="profile-circle"
+          onClick={()=>openModal('img','image.jpg')} />
+        <h1>Ratul Chatterjee</h1>
+        
+      </div>
+
+      <button className="btn" onClick={toggleTheme}>Toggle Theme</button>
+
+      <div className="card"><h2>About</h2><p>Computer Science student interested in development.</p></div>
+      <div className="card"><h2>Skills</h2><p>Java, C, C++, OS</p></div>
+      <div className="card"><h2>Area of Interest</h2><p>Cricket, Tech, AI</p></div>
+      <div className="card"><h2>Activities</h2><p>Participated in cricket and tech events</p></div>
+    </section>
+  );
+}
+
+function Education() {
+  return (
+  <section>
+      <h2 className="section-title">Education</h2>
+      <div className="card">
+        <p><b>College:</b> Ramakrishna Mission Vivekananda Centenary College</p>
+        <p><b>Degree:</b> B.Sc Computer Science</p>
+        <p><b>CGPA:</b> 9.49 </p>
+        <p><b>Website:</b> <a href="https://www.rkmvccrahara.org/" target="_blank">Visit Website</a></p>
+      </div>
+
+      <div className="card">
+        <p><b>School:</b> Naihati Narendra Vidyaniketan(H.S)</p>
+        <p><b>Class 12(percentage):</b> 80%</p>
+        <p><b>Class 10(percentage):</b> 75.14%</p>
+        <p><b>Website:</b> <a href="https://nnv.org.in/" target="_blank">Visit Website</a></p>
+      </div>
+    </section>
+  );
+}
+
+function Projects({openModal}) {
+  return (
+    <section>
+    <h2 className="section-title">Projects</h2>
+        <div className="grid">
+    <div className="card">
+        <h3>Calculator</h3>
+        <p>Developed a scientific calculator supporting advanced mathematical operations. </p>
+        <p><b>GitHub:</b> <a href="https://github.com/Ratul-Chatterjee2006/calculator" target="_blank">https://github.com/Ratul-Chatterjee2006/calculator</a></p>
+        <p><b>GitHub Deploy Link:</b> <a href="https://ratul-chatterjee2006.github.io/calculator/" target="_blank">https://ratul-chatterjee2006.github.io/calculator/</a></p>
+        <img src="calculator.png" alt="Error image" onClick={()=>openModal('img','calculator.png')}/>
+      </div>
+       <div className="card">
+        <h3>VSCode Clone</h3>
+        <p>A Simple Visual Studio Code Clone Website developed by me.</p>
+        <p><b>GitHub:</b> <a href="https://github.com/Ratul-Chatterjee2006/Vs-Code-Clone" target="_blank">https://github.com/Ratul-Chatterjee2006/Vs-Code-Clone</a></p>
+        <p><b>GitHub Deploy Link:</b> <a href="https://ratul-chatterjee2006.github.io/Vs-Code-Clone/" target="_blank">https://ratul-chatterjee2006.github.io/Vs-Code-Clone/</a></p>
+        <img src="vscode.png" alt="Error image" onClick={()=>openModal('img','vscode.png')}/>
+      </div>
+      <div className="card">
+        <h3>TicTacToe</h3>
+        <p>Java based game using logic building.</p>
+        <p><b>GitHub:</b> <a href="https://github.com/Ratul-Chatterjee2006/Tic-Tac-Toe" target="_blank">https://github.com/Ratul-Chatterjee2006/Tic-Tac-Toe</a></p>
+      </div>
+
+      <div className="card">
+        <h3>Students Record Manager</h3>
+        <p>Built a student record manager to store, retrieve, and manage student data using file handling.</p>
+        <p><b>GitHub:</b> <a href="https://github.com/Ratul-Chatterjee2006/student-manager" target="_blank">https://github.com/Ratul-Chatterjee2006/student-manager</a></p>
+      </div>
+      <div className="card">
+        <h3>Task Manager</h3>
+        <p>CLI based project with file handling.</p>
+        <p><b>GitHub:</b> <a href="https://github.com/Ratul-Chatterjee2006/Task-Manager" target="_blank">https://github.com/Ratul-Chatterjee2006/Task-Manager</a></p>
+      </div>
+      </div>
+    </section>
+  );
+}
+
+function Achievements({openModal}) {
+  return (
+    <section>
+      <h2 className="section-title">Achievements</h2>
+       <div className="grid">
+      <div className="card">
+        <h3>Data Visualization by Tata</h3>
+        <img src="datavis.png" onClick={()=>openModal('img','datavis.png')} alt="Error" />
+      </div>
+
+      <div className="card">
+        <h3>Web Development Certificate</h3>
+        <img src="https://via.placeholder.com/200" onClick={()=>openModal('img','https://via.placeholder.com/600')} />
+      </div>
+
+      <div className="card">
+        <h3>SRS Document</h3>
+        <iframe src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" style={{width:'100%',height:'150px'}}></iframe>
+        <button className="btn" onClick={()=>openModal('pdf','https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')}>Open</button>
+      </div>
+      </div>
+    </section>
+  );
+}
+
+function Modal({data, close}) {
+  if(!data) return null;
+  return (
+    <div className="modal" onClick={close}>
+      {data.type==='img' && <img src={data.src} />}
+      {data.type==='pdf' && <iframe src={data.src}></iframe>}
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <footer>
+        
+      <h3>Contacts</h3>
+      <div className="contact-links">
+        <p>
+            <span className="icon-box">
+            <img className="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" />
+            </span>
+           <b> Email: </b>
+          <a href="mailto:rc185047@gmail.com">
+            rc185047@gmail.com
+          </a>
+        </p>
+        <p>
+            <span className="icon-box">
+            <img className="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" />
+            </span>
+            <b>LinkedIn:</b>
+          <a href="https://www.linkedin.com/in/ratul-chatterjee-7bb744347/" target="_blank">
+           Ratul Chatterjee
+          </a>
+        </p>
+        <p>
+            <span className="icon-box">
+              <img className="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" />
+            </span>
+            <b>Github:</b>
+          <a href="https://github.com/Ratul-Chatterjee2006" target="_blank">
+            Ratul-Chatterjee2006
+          </a>
+        </p>
+            <p>© 2026 RATUL CHATTERJEE</p>
+      </div>
+    </footer>
+  );
+}
+
+function App() {
+  const [page,setPage] = React.useState('home');
+  const [modal,setModal] = React.useState(null);
+
+  const toggleTheme = ()=> document.body.classList.toggle('light');
+  const openModal = (type,src)=> setModal({type,src});
+  const closeModal = ()=> setModal(null);
+
+  return (
+    <>
+      <Navbar setPage={setPage} />
+      <main>
+        <div className="page" key={page}>
+          {page==='home' && <Home toggleTheme={toggleTheme} openModal={openModal} />}
+          {page==='education' && <Education />}
+          {page==='projects' && <Projects openModal={openModal} />}
+          {page==='achievements' && <Achievements openModal={openModal} />}
+        </div>
+      </main>
+      <Footer />
+      <Modal data={modal} close={closeModal} />
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+</script>
+
+</body>
+</html>
