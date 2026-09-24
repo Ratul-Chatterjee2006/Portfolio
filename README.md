@@ -24,12 +24,21 @@
 - Achievements & Activities
 - Contact
 ## Projects Included
+- WeatherGpt
+- StackUp
+- ProductApp
+- SiginAndDatabase
+- Android News App
 - Scientific Calculator
+- Text Editor
 - VSCode Clone
 - Tic Tac Toe
 - Student Record Manager
 - Task Manager
 ## Certifications & Activities
+- E-Cell Internal College Hackathon Parampara
+- Build with Bharat 2.0
+- Bharatiya Antariksh Hackathon 2026
 - Apps Design and Development Course
 - Red Hat Python Certificate
 - Data Visualization Certificate
